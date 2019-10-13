@@ -1,37 +1,58 @@
 class UsersController < ApplicationController
 
   # GET: /users
-  get "/users" do
-    erb :"/users/index.html"
+
+
+  get '/signup' do
+    if !logged_in?
+      erb :'users/new.html'
+    else
+      redirect to '/movies'
+    end
   end
 
-  # GET: /users/new
-  get "/users/new" do
-    erb :"/users/new.html"
+  post '/signup' do
+    if params[:username] == "" || params[:password] == ""
+      redirect to '/signup'
+    else
+      @user = User.new(:username => params[:username], :password => params[:password])
+      @user.save
+      session[:user_id] = @user.id
+      redirect to '/movies'
+    end
   end
 
-  # POST: /users
-  post "/users" do
-    redirect "/users"
+  get '/login' do
+    if !logged_in?
+      erb :'users/login.html'
+    else
+      redirect to '/movies'
+    end
   end
 
-  # GET: /users/5
-  get "/users/:id" do
-    erb :"/users/show.html"
+
+  post '/login' do
+    user = User.find_by(:username => params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect to "/movies"
+    else
+      redirect to '/signup'
+    end
   end
 
-  # GET: /users/5/edit
-  get "/users/:id/edit" do
-    erb :"/users/edit.html"
+  get '/logout' do
+    if logged_in?
+      session.destroy
+      redirect to '/login'
+    else
+      redirect to '/'
+    end
   end
 
-  # PATCH: /users/5
-  patch "/users/:id" do
-    redirect "/users/:id"
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    erb :'users/show.html'
   end
 
-  # DELETE: /users/5/delete
-  delete "/users/:id/delete" do
-    redirect "/users"
-  end
 end
