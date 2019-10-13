@@ -1,1 +1,10 @@
-<h1>This is the Model's index page.</h1>
+  
+<h1>This is your Movie Collection!</h1>
+
+<%@movies.each do |movie|%>
+    <li><%=movie.name%> </li>
+    <% end %>
+
+<br>
+<br>
+    <a href="/movies/new">Create a New Movie </a>
