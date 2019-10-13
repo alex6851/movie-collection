@@ -6,6 +6,7 @@ class MoviesController < ApplicationController
   # GET: /movies/new
   get "/movies/new" do
     if logged_in?
+      @genres = Genre.all
       erb :'/movies/new.html'
     else
     redirect '/login'
@@ -15,10 +16,15 @@ class MoviesController < ApplicationController
   # POST: /movies
   post '/movies' do
     if logged_in?
-      if params[:name] == ""
+      if params[:movie][:name] == ""
         redirect to "/movies/new"
       else
-        @movie = current_user.movies.build(name: params[:name])
+        @movie = current_user.movies.build(name: params[:movie][:name])
+        if Genre.find_by_id(params["movie"]["genre_id"])
+          @movie.genre = Genre.find_by_id(params["movie"]["genre_id"])
+        else 
+          @movie.genre = Genre.create(name: params["genre"]["name"])
+        end
         if @movie.save
           redirect to "/movies/#{@movie.id}"
         else

@@ -1,5 +1,22 @@
 <h2>Add a Movie to your collection</h2>
 <form action="/movies" method="POST">
-  <p>Name: <input type="text" name="name"></p>
+  <p>Name: <input type="text" name="movie[name]" id="movie_name"></p>
+  <br>
+  <p>Select an existing genre or create a new one below.</p>
+ 
+  <h3>Existing genres</h3>
+  <%@genres.each do |genre|%>
+   <%=genre.name%>
+   <% end %>
+  <br>
+  
+  <h3>New genre</h3>
+  <label>Movie genre: </label>
+  <br>
+  <input type="text" name="genre[name]" id="genre_name"></input>
+  <br><br>
+  
+
+
   <input class="btn btn-primary" type="submit" value="submit">
 </form>
