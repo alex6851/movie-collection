@@ -94,4 +94,5 @@ class GenresController < ApplicationController
         else
           redirect '/login'
         end
+    end
 end
