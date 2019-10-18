@@ -1,1 +1,4 @@
 <h1>This is my Genre Index page</h1>
+<% @genres.all.each do |genre| %>
+   <%= genre.name%>
+    <% end %>

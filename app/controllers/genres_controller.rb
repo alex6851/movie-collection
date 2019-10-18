@@ -89,7 +89,7 @@ class GenresController < ApplicationController
     
       get "/genres" do
         if logged_in?
-          @genres = genre.all
+          @genres = Genre.all
         erb :"/genres/index.html"
         else
           redirect '/login'

@@ -15,6 +15,7 @@ class MoviesController < ApplicationController
 
   # POST: /movies
   post '/movies' do
+    binding.pry
     if logged_in?
       if params[:movie][:name] == ""
         redirect to "/movies/new"
