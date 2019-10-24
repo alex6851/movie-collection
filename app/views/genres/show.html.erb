@@ -1,0 +1,5 @@
+<h1>These are Movies in the <%=@genre.name%> Genre</h1>
+<% @genre.movies.all.each do |movie| %>
+   <%= movie.name%>
+   <a href="/movies/<%=movie.id%>/edit"> Edit Movie </a>
+    <% end %>

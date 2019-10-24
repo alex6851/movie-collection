@@ -6,7 +6,7 @@
  
   <h3>Existing genres</h3>
   <%@genres.each do |genre|%>
-    <input type="checkbox" name="genre[movie_ids][]" value="<%=genre.id%>"> <%=genre.name%>
+    <input type="checkbox" name="genre[genre_id][]" value="<%=genre.id%>"> <%=genre.name%>
    <% end %>
   <br>
   

@@ -15,14 +15,13 @@ class MoviesController < ApplicationController
 
   # POST: /movies
   post '/movies' do
-    binding.pry
     if logged_in?
       if params[:movie][:name] == ""
         redirect to "/movies/new"
       else
         @movie = current_user.movies.build(name: params[:movie][:name])
-        if Genre.find_by_id(params["movie"]["genre_id"])
-          @movie.genre = Genre.find_by_id(params["movie"]["genre_id"])
+        if Genre.find_by_id(params["genre"]["genre_id"])
+          @movie.genre = Genre.find_by_id(params["genre"]["genre_id"])
         else 
           @movie.genre = Genre.create(name: params["genre"]["name"])
         end
@@ -52,6 +51,7 @@ class MoviesController < ApplicationController
   get '/movies/:id/edit' do
     if logged_in?
       @movie = Movie.find_by_id(params[:id])
+      @genres = Genre.all
       if @movie && @movie.user == current_user
         erb :'movies/edit.html'
       else
@@ -70,6 +70,11 @@ class MoviesController < ApplicationController
       else
         @movie = Movie.find_by_id(params[:id])
         if @movie && @movie.user == current_user
+          #Trying to edit movie's genre with a selection of existing genres
+          # if Genre.find_by_id(params["genre"]["genre_id"])  
+          #   @genre = Genre.find_by_id(params["genre"]["genre_id"])
+          #   @movie.genre.update(name: @genre.name)
+          # end
           if @movie.update(name: params[:name])
             redirect to "/movies/#{@movie.id}"
           else

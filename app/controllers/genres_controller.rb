@@ -16,7 +16,9 @@ class GenresController < ApplicationController
             redirect to "/genres/new"
           else
             @genre = current_user.genres.build(name: params[:name])
-            if @genre.save
+            if !params["movie"]["name"].empty?
+              @genre.movies << Movie.create(name: params["movie"]["name"])
+              @genre.save
               redirect to "/genres/#{@genre.id}"
             else
               redirect to "/genres/new"
@@ -31,7 +33,7 @@ class GenresController < ApplicationController
       # GET: /genres/5
       get '/genres/:id' do
         if logged_in?
-          @genre = genre.find_by_id(params[:id])
+          @genre = Genre.find_by_id(params[:id])
           erb :'genres/show.html'
         else
           redirect to '/login'
