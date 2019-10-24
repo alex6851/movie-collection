@@ -12,12 +12,11 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    binding.pry
     if params[:username] == "" || params[:password] == ""
       redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :password => params[:password])
-      @user.name = @user.slug
+      @user.slug = @user.slug
       @user.save
       session[:user_id] = @user.id
       redirect to '/movies'
@@ -54,6 +53,7 @@ class UsersController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
+    binding.pry
     erb :'users/show.html'
   end
 
