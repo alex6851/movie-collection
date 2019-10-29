@@ -105,6 +105,7 @@ class MoviesController < ApplicationController
   get "/movies" do
     if logged_in?
       @movies = Movie.all
+      @user = current_user
     erb :"/movies/index.html"
     else
       redirect '/login'

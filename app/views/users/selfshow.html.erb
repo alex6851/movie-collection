@@ -1,0 +1,5 @@
+<h1>These are your movies.</h1>
+
+<% @user.movies.each do |movie| %>
+    <li><%= movie.name %>  <a href="/movies/<%= movie.id %>/edit">Edit Movie </a></li>
+    <%end%>

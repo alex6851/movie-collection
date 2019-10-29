@@ -1,9 +1,12 @@
   
-<h1>This is your Movie Collection!</h1>
+<h1>This is the Collection of all the Movies!</h1>
+<br>
 <%@movies.each do |movie|%>
-    <li><%=movie.name%> </li>
+    <h4><%=movie.name%> </h4> <br>
     <% end %>
+<br>
+<br>
+<a href="/users/<%= @user.slug %>">Movies that belong to you! </a>
+<br>
 
-<br>
-<br>
-    <a href="/movies/new">Create a New Movie </a>
+<a href="/movies/new">Create a New Movie </a>
